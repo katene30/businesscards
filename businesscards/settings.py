@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tpyy22wpy638ar6l=lg@4xw$a$_n+_x%(yf&tg(x*1ek32#d_o'
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -125,9 +125,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Media settings
+MEDIA_ROOT = "/data/media"
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Render support
-if os.environ.get('RENDER'):
-    DEBUG = False
+
+# Add support for Fly.io database connection
+if os.environ.get('FLY_IO'):
+    import dj_database_url
+    DATABASES['default']['NAME'] = "/data/db.sqlite3"
