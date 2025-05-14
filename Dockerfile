@@ -10,5 +10,4 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . /app/
 
-ENV PORT 5000
-CMD ["gunicorn", "businesscards.wsgi:application", "--bind", "0.0.0.0:$PORT"]
+CMD ["gunicorn", "businesscards.wsgi:application", "--bind", "0.0.0.0:5000"]
